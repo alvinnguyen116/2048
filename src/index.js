@@ -103,6 +103,7 @@ class Game extends React.Component {
     let squares = this.state.squares.slice();
     let oldScore = squares.reduce((a,b)=> a+b)
     let columns = this.arrayToColumn(squares);
+    let multiplier = 1;
     if (direction === "up") {
       columns = columns.map(this.moveUp);
     } else if (direction === "down") {
@@ -111,23 +112,29 @@ class Game extends React.Component {
     squares = this.columnToArr(columns);
     squares = this.addRandom(squares, Math.floor(this.state.number/2), this.state.mode);
     let newScore = squares.reduce((a,b) => a + b)
-
-    this.setState({squares: squares, score: this.state.score + (newScore - oldScore)});
+    if (this.state.mode === "extreme") {
+      multiplier = 5;
+    }
+    this.setState({squares: squares, score: this.state.score + (newScore - oldScore)*multiplier});
   }
 
   leftOrRight(direction) {
     let squares = this.state.squares.slice();
+    let oldScore = squares.reduce((a,b)=> a+b)
     let rows = this.arrayToRow(squares);
-    // console.log(rows);
+    let multiplier = 1;
     if (direction === "left") {
       rows = rows.map(this.moveUp);
     } else if (direction === "right") {
       rows = rows.map(this.moveDown);
     }
     squares = this.rowToArr(rows);
-
+    if (this.state.mode === "extreme") {
+      multiplier = 5;
+    }
     squares = this.addRandom(squares, Math.floor(this.state.number/2), this.state.mode);
-    this.setState({squares: squares});
+    let newScore = squares.reduce((a,b) => a + b)
+    this.setState({squares: squares, score: this.state.score + (newScore-oldScore)*multiplier});
   }
 
   arrayToColumn(arr) {
