@@ -26,9 +26,13 @@ function reduce(arr) {
 }
 
 function Square(props) { //function component 
-    const base = "ffffff";
+    let base = "ffffff";
     const multiplier = (props.value ? props.value : 0)
-    let temp = addHexColor(base,1000000, multiplier);
+    let temp = addHexColor(base,14596231, Math.floor(multiplier/2));
+    if (props.mode === "extreme") {
+      temp = addHexColor(base,16007990, multiplier);
+    }
+    
     const background = "#" + temp;
     const style = {
       backgroundColor: background,
@@ -46,6 +50,7 @@ class Board extends React.Component { //class component
   renderSquare(i) {
     return <Square
       value={this.props.squares[i]}
+      mode={this.props.mode}
     />
   }
 
@@ -230,16 +235,11 @@ class Game extends React.Component {
       }
     }
 
-    let number = emptyIndexes.length;
-    let history = [];
-    while (amount && number) {
-      let index = this.randomIndex(number)
-      if (history.indexOf(index) === -1) {
-        arr[emptyIndexes[index]] = this.randomValue(mode);
-        amount--;
-        number--; 
-        history.push(index);
-      }
+    while ((amount > 0) && (emptyIndexes.length > 0)) {
+      let index = this.randomIndex(emptyIndexes.length)
+      arr[emptyIndexes[index]] = this.randomValue(mode);
+      amount--;
+      emptyIndexes.splice(emptyIndexes[index], 1); 
     }
     return arr;
   }
@@ -328,9 +328,9 @@ class Game extends React.Component {
       return (
       <div className="game" >
         <div className="game-board">
-          <Board squares={this.state.squares} number={number}/>
+          <Board squares={this.state.squares} number={number} mode={this.state.mode}/>
         </div>
-        <div>
+        <div class="userControls">
           <div class="status">{"No more moves."}</div>
           <div class="status">{"Final Score:" + this.state.score}</div>
           <div class="row slider">
@@ -338,7 +338,7 @@ class Game extends React.Component {
             <input type="range" min="2" max="10" value={display} class="slider" onChange={(e)=>this.handleSize(e)}/>
           </div>
           <div class="row">
-            <div class="col-4">{"Keyboard Events: "}</div> 
+            <div class="col-4 arrowKeys">{"Arrow Keys: "}</div> 
             <input class="col-4" type="text" {...ArrowKeysReact.events} tabIndex="1" autofocus="true"
               ref={c => (this._input = c)}/>
           </div>
@@ -353,16 +353,16 @@ class Game extends React.Component {
       return (
         <div className="game" >
           <div className="game-board">
-            <Board squares={this.state.squares} number={number}/>
+            <Board squares={this.state.squares} number={number} mode={this.state.mode}/>
           </div>
-          <div>
+          <div class="userControls">
             <div class="status">{"Score: " + this.state.score}</div>
             <div class="row slider">
               <div class="col-4">{"Board Size: "}</div>
               <input type="range" min="2" max="10" value={display} class="slider" onChange={(e)=>this.handleSize(e)}/>
             </div>
             <div class="row">
-              <div class="col-4">{"Keyboard Events: "}</div> 
+              <div class="col-4 arrowKeys">{"Arrow Keys: "}</div> 
               <input class="col-4" type="text" {...ArrowKeysReact.events} tabIndex="1" autofocus="true"
               ref={c => (this._input = c)}/>
             </div>

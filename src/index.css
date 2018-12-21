@@ -113,3 +113,32 @@ ol, ul {
 .active {
   background-color: #00800061;
 }
+
+.arrowKeys {
+  padding-right: 10px;
+}
+
+.userControls {
+  padding: 15px 20px;
+  border: 4px double #8080807d;
+}
+
+@media (max-width: 800px) {
+  .game {
+    flex-direction: column;
+    justify-content: start;
+  }
+
+  .game-board {
+    margin: 50px 0;
+  }
+
+  .userControls {
+    margin-bottom: 50px;
+  }
+
+  #root {
+    height: unset;
+  }
+
+}
