@@ -346,7 +346,7 @@ class Game extends React.Component {
           </div>
           <div class="row">
             <div class="col-4 arrowKeys">{"Arrow Keys: "}</div> 
-            <input class="col-4" type="text" {...ArrowKeysReact.events} tabIndex="1" autofocus="true"
+            <input class="col-4" type="text" {...ArrowKeysReact.events} tabIndex="1"
               ref={c => (this._input = c)}/>
           </div>
           <div class="row">
@@ -370,7 +370,7 @@ class Game extends React.Component {
             </div>
             <div class="row">
               <div class="col-4 arrowKeys">{"Arrow Keys: "}</div> 
-              <input class="col-4" type="text" {...ArrowKeysReact.events} tabIndex="1" autofocus="true"
+              <input class="col-4" type="text" {...ArrowKeysReact.events} tabIndex="1"
               ref={c => (this._input = c)}/>
             </div>
             <div class="row">
